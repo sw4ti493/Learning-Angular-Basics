@@ -1,0 +1,124 @@
+<!DOCTYPE html> 
+<html ng-app="myApp">
+<head>
+  <meta charset="utf-8">
+  <title>Add Users to Local Storage and Append to List</title>
+  <link rel="stylesheet"
+    href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+  <script
+    src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script
+    src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <script
+    src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
+</head>
+
+ <body ng-controller="NameCtrl" class="container" style="margin-top: 20px;">
+  <!-- THIS FORM IS FOR ADDING A NEW NAME -->
+  <form class="form-horizontal" role="form" ng-submit="addRow()">
+    <div class="form-group">
+       <label class="col-md-2 control-label">First Name</label>
+       <div class="col-md-4">
+          <input type="text" placeholder="First Name" class="form-control" name="firstname"
+                 ng-model="fname" required />
+       </div>
+    </div>
+
+    <div class="form-group">
+       <label class="col-md-2 control-label">Last Name</label>
+       <div class="col-md-4">
+          <input type="text" placeholder="Last Name" class="form-control" name="lastname"
+                 ng-model="lname" required />
+       </div>
+    </div>
+    <div class="form-group">                        
+       <div style="padding-left:110px">
+         <input type="submit" value="Submit" class="btn btn-primary"/>
+       </div>
+    </div>
+  </form>
+
+  <!-- THIS TABLE USES ng-repeat TO DISPLAY THE FIRST AND LAST NAME -->
+   <table class="table">
+     <tr><th>First Name</th><th>Last Name</th></tr>
+
+     <tr ng-repeat="fullname in name">
+        <td>{{fullname.fname}}</td>
+        <td>{{fullname.lname}}</td>
+     </tr>
+   </table>
+  
+   <script>
+    var myApp = angular.module("myApp", []);
+
+    myApp.controller("NameCtrl", function($scope) {
+        // "SEED DATA" FOR LIST OF NAMES
+        $scope.name = [
+               {'fname':'ABC', 'lname': 'DEF'}
+        ];
+    
+      // APPEND NEW NAME TO ARRAY OF NAMES
+      $scope.addRow = function(){
+      console.log("checking: "+$scope.fname + "checking: "+$scope.lname);    
+        $scope.name.push({'fname':$scope.fname,
+                               'lname':$scope.lname});
+        $scope.fname='';
+        $scope.lname='';
+      };
+    });
+   </script>
+//    <script> 
+//   var userListKey = "mylistofusers";
+
+//   function searchLocalStorage(searchItemKey) {
+//     // the length property contains the item count in the storage
+//     var i = -1, key, itemCount, items = {};
+ 
+//     itemCount = localStorage.length;
+ 
+//     while ( ++i < itemCount ) {
+//        // retrieve the value of the current key
+//        key = localStorage.key(i);
+ 
+//        if(key == searchItemKey) {
+// console.log("search item key:  "+searchItemKey);
+// console.log("contents of item: "+localStorage.getItem(searchItemKey));
+// console.log("exiting the loop early");
+//           return localStorage.getItem(searchItemKey);
+//        }
+//     }
+
+// console.log("search item "+searchItemKey+" not found in local storage");
+//     return "NOTFOUND";
+//   }
+
+//   function populateLocalStorage() {
+//     var userList = [{fname:"ABC", lname:"DEF"}];
+
+// console.log("saving array with key: "+userListKey);
+//   //localStorage.setItem(userListKey, userList);
+//     localStorage[userListKey] = JSON.stringify(userList);
+//   }
+
+//   // STEP #1: put an array of data in local storage 
+//   populateLocalStorage();
+
+//   // STEP #2: search for data array in local storage 
+//   var lsUserList = searchLocalStorage(userListKey);
+// console.log("returned lsUserList: "+lsUserList);
+
+//   // STEP #3: display contents of data array 
+//   if(lsUserList != "NOTFOUND") {
+//     var lsUserList = JSON.parse(lsUserList);
+// console.log("lsUserList length = "+lsUserList.length); 
+
+//     for(var i=0; i<lsUserList.length; i++) {
+//        var item = lsUserList[i];
+// //console.log("item "+i+" = "+JSON.stringify(item));
+// console.log("item "+i+" fname = "+item.fname+" lname = "+item.lname);
+//     } 
+//   }
+//  </script>
+ </body>
+</html>
+
